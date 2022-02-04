@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "317350571036",
+    "project_id": "shopar-3f662",
+    "storage_bucket": "shopar-3f662.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317350571036:android:44dc1edcfb276ac11003d9",
+        "android_client_info": {
+          "package_name": "com.mountainchickens.shop_ar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317350571036-080a3lh15cdti3659g4bnts7fegnebc1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-zRjuuTbpKvgI0mqhC3sN9gteeoKM6ks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317350571036-080a3lh15cdti3659g4bnts7fegnebc1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
