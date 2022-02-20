@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shop_ar/loginSignup//loginPage.dart';
 import 'firebase_options.dart';
-import 'loading/loadingMain.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'loginSignup/loadingMain.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,35 +49,55 @@ class MyApp extends StatelessWidget {
     };
     MaterialColor lightRed = MaterialColor(0xFFE84855, secondary);
 
-    return MaterialApp(
-        theme: ThemeData(
-          // Define the default brightness and colors.
-          colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: darkRed,
-          ).copyWith(secondary: lightRed, brightness: Brightness.dark),
-          brightness: Brightness.dark,
-          backgroundColor: const Color(0xFF1E1E1E),
-          primaryColor: const Color(0xFFE84855),
+    ThemeData themeColors = ThemeData(
+      // Define the default brightness and colors.
+      colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: darkRed,
+      ).copyWith(secondary: lightRed, brightness: Brightness.dark),
+      brightness: Brightness.dark,
+      backgroundColor: const Color(0xFF1E1E1E),
+      primaryColor: const Color(0xFFE84855),
 
-          // Define the default font family.
-          fontFamily: 'Georgia',
+      // Define the default font family.
+      fontFamily: 'Georgia',
 
-          // Define the default `TextTheme`. Use this to specify the default
-          // text styling for headlines, titles, bodies of text, and more.
-          textTheme: const TextTheme(
-            headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-            headline6: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
-            bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
-          ),
-        ),
-        home: Scaffold(
-          // backgroundColor: Theme.of(context).colorScheme.primary,
-          body: Container(
-            alignment: Alignment.center,
-            child: Container(
-              child: LoadingScreen(),
-            ),// New code
-          ),
-        ));
+      // Define the default `TextTheme`. Use this to specify the default
+      // text styling for headlines, titles, bodies of text, and more.
+      textTheme: const TextTheme(
+        headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
+        headline6: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
+        bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+      ),
+    );
+
+    if (FirebaseAuth.instance.currentUser != null){
+      print("Logged In!");
+      return MaterialApp(
+          theme: themeColors,
+          home: Scaffold(
+            // backgroundColor: Theme.of(context).colorScheme.primary,
+            body: Container(
+              alignment: Alignment.center,
+              child: Container(
+                child: LoginPage(),
+              ),// New code
+            ),
+          ));
+    } else {
+      print("Not Logged In!");
+      return MaterialApp(
+          theme: themeColors,
+          home: Scaffold(
+            // backgroundColor: Theme.of(context).colorScheme.primary,
+            body: Container(
+              alignment: Alignment.center,
+              child: Container(
+                child: LoginPage(),
+              ),// New code
+            ),
+          ));
+    }
+
+
   }
 }
