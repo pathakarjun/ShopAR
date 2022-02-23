@@ -2,14 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shop_ar/loginSignup/loadingMain.dart';
+import 'package:shop_ar/loginSignup/loading_main.dart';
+import 'package:shop_ar/loginSignup/signup_page.dart';
 
-class SignupPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _SignupPage createState() => _SignupPage();
+  _LoginPage createState() => _LoginPage();
 }
 
-class _SignupPage extends State<SignupPage> {
+class _LoginPage extends State<LoginPage> {
   TextEditingController email = new TextEditingController();
   TextEditingController password = new TextEditingController();
 
@@ -19,7 +20,7 @@ class _SignupPage extends State<SignupPage> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-          email: email.text, password: password.text);
+              email: email.text, password: password.text);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -58,17 +59,19 @@ class _SignupPage extends State<SignupPage> {
             ElevatedButton(
               onPressed: () {
                 login();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoadingScreen()),
-                );
               },
-              child: Text("Login"),
+              child: const Text(
+                'Home',
+              ),
             ),
             SizedBox(height: 15),
             ElevatedButton(
               onPressed: () {
                 print(FirebaseAuth.instance.currentUser);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignupPage()),
+                );
               },
               child: Text("Sign Up"),
             ),
