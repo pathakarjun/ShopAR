@@ -52,16 +52,17 @@ class MyApp extends StatelessWidget {
 
     ThemeData themeColors = ThemeData(
       // Define the default brightness and colors.
+      brightness: Brightness.dark,
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: darkRed,
       ).copyWith(secondary: lightRed, brightness: Brightness.dark),
-      brightness: Brightness.dark,
       backgroundColor: const Color(0xFF1E1E1E),
       primaryColor: const Color(0xFFE84855),
+      scaffoldBackgroundColor: const Color(0xFF353535),
+      appBarTheme: AppBarTheme(
+          color: const Color(0xFF1e1e1e),
+          foregroundColor: const Color(0xFFFFFFFF)),
 
-
-      // Define the default `TextTheme`. Use this to specify the default
-      // text styling for headlines, titles, bodies of text, and more.
       textTheme: GoogleFonts.montserratTextTheme(
         Theme.of(context).textTheme,
       ).apply(
@@ -73,6 +74,7 @@ class MyApp extends StatelessWidget {
     if (FirebaseAuth.instance.currentUser != null) {
       // ****LOGGED IN****
       return MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: themeColors,
         home: Scaffold(
           // backgroundColor: Theme.of(context).colorScheme.primary,
@@ -87,6 +89,7 @@ class MyApp extends StatelessWidget {
     } else {
       // ****NOT LOGGED IN****
       return MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: themeColors,
         home: Scaffold(
           body: Container(

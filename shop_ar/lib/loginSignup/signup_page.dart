@@ -50,40 +50,56 @@ class _SignupPage extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: const Text('Sign Up'),
+        title: const Text(
+          'Sign Up',
+        ),
+        // backgroundColor: Color(0xFF1e1e1e),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            Stepper(
-              //type: StepperType.horizontal,
-              currentStep: _index,
-              onStepCancel: () {
-                if (_index > 0) {
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            children: [
+              Stepper(
+                currentStep: _index,
+                onStepCancel: () {
+                  if (_index > 0) {
+                    setState(() {
+                      _index -= 1;
+                    });
+                  }
+                },
+                onStepContinue: () {
+                  if (_index <= 1) {
+                    setState(() {
+                      _index += 1;
+                    });
+                  } else if (_index > 1) {}
+                },
+                onStepTapped: (int index) {
                   setState(() {
-                    _index -= 1;
+                    _index = index;
                   });
-                }
-              },
-              onStepContinue: () {
-                if (_index <= 1) {
-                  setState(() {
-                    _index += 1;
-                  });
-                } else if (_index > 1){
-
-                }
-              },
-              onStepTapped: (int index) {
-                setState(() {
-                  _index = index;
-                });
-              },
-              steps: _steps,
-            )
-          ],
+                },
+                steps: _steps,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
+                ),
+                onPressed: () {
+                  print(FirebaseAuth.instance.currentUser);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignupPage()),
+                  );
+                },
+                child: Text("Finish"),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -98,11 +114,13 @@ class _PersonalForm extends StatelessWidget {
     return Column(
       children: [
         TextFormField(
+          keyboardType: TextInputType.name,
           decoration: const InputDecoration(
             labelText: 'First Name',
           ),
         ),
         TextFormField(
+          keyboardType: TextInputType.name,
           decoration: const InputDecoration(
             labelText: 'Last Name',
           ),
@@ -128,6 +146,13 @@ class _AddressForm extends StatelessWidget {
           decoration: const InputDecoration(
             labelText: 'City',
           ),
+          onSaved: (String? value) {
+            // This optional block of code can be used to run
+            // code when the user saves the form.
+          },
+          validator: (String? value) {
+            return (value!.contains('A')) ? "WRONG BITCH" : null;
+          },
         ),
         TextFormField(
           decoration: const InputDecoration(
@@ -135,6 +160,7 @@ class _AddressForm extends StatelessWidget {
           ),
         ),
         TextFormField(
+          keyboardType: TextInputType.number,
           decoration: const InputDecoration(
             labelText: 'Zip Code',
           ),
@@ -152,6 +178,7 @@ class _PhoneForm extends StatelessWidget {
     return Column(
       children: [
         TextFormField(
+          keyboardType: TextInputType.phone,
           decoration: const InputDecoration(
             labelText: 'Phone Number',
           ),
