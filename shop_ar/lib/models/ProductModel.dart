@@ -5,20 +5,20 @@ class ProductModel{
   static const PRICE = "Price";
   static const SELLER = "Seller";
 
-  late String id;
-  late String Image;
-  late String Name;
-  late String Seller;
-  late double Price;
+  String id = 'test';
+  String image = 'image';
+  String name = 'name';
+  String seller = 'seller';
+  double price = 0.0;
 
-  ProductModel(this.id, this.Image, this.Name, this.Seller, this.Price);
+  ProductModel({required this.id,required this.image,required this.name,required this.seller,required this.price});
 
   ProductModel.fromMap(Map<String, dynamic> data){
     id = data[ID];
-    Image = data[IMAGE];
-    Name = data[NAME];
-    Seller = data[SELLER];
-    Price = data[PRICE].toDouble();
+    image = data[IMAGE];
+    name = data[NAME];
+    seller = data[SELLER];
+    price = data[PRICE].toDouble();
   }
 
 }

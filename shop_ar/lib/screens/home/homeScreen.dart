@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop_ar/Firebase/productService.dart';
+import 'package:shop_ar/models/ProductModel.dart';
+import 'package:shop_ar/models/oneProduct.dart';
+
+import 'package:shop_ar/screens/home/constant.dart';
+
+import '../../controllers/Product_widget.dart';
 
 
 class HomeScreen extends StatelessWidget{
@@ -33,14 +40,15 @@ class HomeScreen extends StatelessWidget{
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 0.0),
-        child: GridView.builder(
+        /*child: GridView.builder(
           itemCount: 100,
           itemBuilder: (context,index) => ItemTile(index),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 1,
           ),
-        ),
+        ),*/
+        child: ProductsWidget(),
 
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -94,17 +102,86 @@ class ItemTile extends StatelessWidget {
   }
 }
 
-//class ProductsWidget extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//    return Obx(()=>GridView.count(
-//        crossAxisCount: 2,
-//        childAspectRatio: .63,
-//        padding: const EdgeInsets.all(10),
-//        mainAxisSpacing: 4.0,
-//        crossAxisSpacing: 10,
-//        children: producsController.products.map((ProductModel product) {
-//          return SingleProductWidget(product: product,);
-//        }).toList()));
-//  }
-//}
+/*
+class ProductsWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Obx(()=>GridView.count(
+        crossAxisCount: 2,
+        childAspectRatio: .63,
+        padding: const EdgeInsets.all(10),
+        mainAxisSpacing: 4.0,
+        crossAxisSpacing: 10,
+
+        children: productController.products.map((ProductModel product) {
+
+          return SingleProductWidget(product: product);
+        }).toList()));
+  }
+}
+*/
+
+/*
+class SingleProductWidget extends StatelessWidget {
+  final ProductModel product;
+
+  const SingleProductWidget({Key key, this.product}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.withOpacity(.5),
+                offset: Offset(3, 2),
+                blurRadius: 7)
+          ]),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                ),
+                child: Image.network(
+                  product.Image,
+                  width: double.infinity,
+                )),
+          ),
+          Text(
+            product.Name
+          ),
+          Text(
+            product.Seller,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  "\$${product.Price}"
+                ),
+              ),
+              SizedBox(
+                width: 30,
+              ),
+              /*IconButton(
+                  icon: Icon(Icons.add_shopping_cart),
+                  onPressed: () {
+                    cartController.addProductToCart(product);
+                  })*/
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}*/

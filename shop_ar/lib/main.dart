@@ -20,7 +20,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  Get.put(productController());
+  Get.put(ProductController());
   runApp(const ShopAR());
 }
 
