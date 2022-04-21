@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shop_ar/loginSignup/loading_main.dart';
-import 'package:shop_ar/loginSignup/signup_page.dart';
+import 'package:shop_ar/loginSignup/login_page.dart';
 
 class ForgotPassPage extends StatefulWidget {
   @override
@@ -11,14 +10,17 @@ class ForgotPassPage extends StatefulWidget {
 }
 
 class _ForgotPassPage extends State<ForgotPassPage> {
-  TextEditingController email = new TextEditingController();
-  TextEditingController password = new TextEditingController();
+  TextEditingController email = TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  @override
   Future<void> resetPassword(String email) async {
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+            (r) => false
+    );
   }
 
   @override
@@ -34,22 +36,22 @@ class _ForgotPassPage extends State<ForgotPassPage> {
       body: SafeArea(
         child: Container(
           height: double.infinity,
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
                 ),
                 controller: email,
               ),
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
+                  minimumSize: const Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
                 ),
                 onPressed: () {
                   resetPassword(email.text);
@@ -58,8 +60,8 @@ class _ForgotPassPage extends State<ForgotPassPage> {
                   'Submit',
                 ),
               ),
-              SizedBox(height: 30),
-              Text(
+              const SizedBox(height: 30),
+              const Text(
                 "By clicking submit, if there is an account associated with the submitted email, "
                     "we will send the email a message with "
                     "information on how to reset it's account's password.",

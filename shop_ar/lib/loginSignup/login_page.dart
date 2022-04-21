@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shop_ar/loginSignup/forgot_password.dart';
-import 'package:shop_ar/loginSignup/loading_main.dart';
 import 'package:shop_ar/loginSignup/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,8 +11,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-  TextEditingController email = new TextEditingController();
-  TextEditingController password = new TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -22,6 +21,12 @@ class _LoginPage extends State<LoginPage> {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: email.text, password: password.text);
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => ForgotPassPage()), // Replace ForgotPassPage() with Home Page Screen
+              (r) => false
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -40,30 +45,30 @@ class _LoginPage extends State<LoginPage> {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Container(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             child: Column(
               children: [
-                Image(image: AssetImage("assets/images/Logo.png")),
+                const Image(image: AssetImage("assets/images/Logo.png")),
                 TextField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
                   ),
                   controller: email,
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 TextField(
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
                   ),
                   controller: password,
                 ),
-                SizedBox(height: 60),
+                const SizedBox(height: 60),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
+                    minimumSize: const Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
                   ),
                   onPressed: () {
                     login();
@@ -72,10 +77,10 @@ class _LoginPage extends State<LoginPage> {
                     'Log In',
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
+                    minimumSize: const Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
                   ),
                   onPressed: () {
                     print(FirebaseAuth.instance.currentUser);
@@ -84,9 +89,9 @@ class _LoginPage extends State<LoginPage> {
                       MaterialPageRoute(builder: (context) => SignupPage()),
                     );
                   },
-                  child: Text("Sign Up"),
+                  child: const Text("Sign Up"),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 TextButton(onPressed: () {
                   Navigator.push(
                     context,

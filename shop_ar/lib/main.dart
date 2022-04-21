@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shop_ar/loginSignup//login_page.dart';
 import 'firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'loginSignup/loading_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
@@ -59,9 +57,9 @@ class MyApp extends StatelessWidget {
       backgroundColor: const Color(0xFF1E1E1E),
       primaryColor: const Color(0xFFE84855),
       scaffoldBackgroundColor: const Color(0xFF353535),
-      appBarTheme: AppBarTheme(
-          color: const Color(0xFF1e1e1e),
-          foregroundColor: const Color(0xFFFFFFFF)),
+      appBarTheme: const AppBarTheme(
+          color: Color(0xFF1e1e1e),
+          foregroundColor: Color(0xFFFFFFFF)),
 
       textTheme: GoogleFonts.montserratTextTheme(
         Theme.of(context).textTheme,
@@ -81,7 +79,7 @@ class MyApp extends StatelessWidget {
           body: Container(
             alignment: Alignment.center,
             child: Container(
-              child: LoginPage(),
+              child: LoginPage(), //**************** CHANGE TO HOME SCREEN *******************
             ), // New code
           ),
         ),
