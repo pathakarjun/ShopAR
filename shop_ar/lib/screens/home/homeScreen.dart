@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_ar/Firebase/productService.dart';
@@ -48,6 +49,21 @@ class HomeScreen extends StatelessWidget{
             childAspectRatio: 1,
           ),
         ),*/
+        /*
+        child: Container(
+                  //product: ProductModel(id: 'id', image: 'image', name: 'name', seller: 'seller', price: 10.0)
+          //SingleProductWidget(product: productController.products.)
+            child: GridView.count(
+            crossAxisCount: 2,
+              children:
+            productController.products.map((ProductModel product) {
+                return SingleProductWidget(product: product);
+              }).toList()
+
+            )
+        )
+        */
+
         child: ProductsWidget(),
 
       ),

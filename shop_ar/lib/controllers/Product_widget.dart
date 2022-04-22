@@ -10,6 +10,8 @@ import '../screens/home/constant.dart';
 
 
 class ProductsWidget extends StatelessWidget {
+  const ProductsWidget({Key? key}) : super(key: key);
+
 
 
   @override
@@ -23,6 +25,34 @@ class ProductsWidget extends StatelessWidget {
 
         children: productController.products.map((ProductModel product) {
           return SingleProductWidget(product: product);
-        }).toList()));
+        }).toList()
+
+    ));
   }
 }
+
+/*
+
+class ProductsWidget extends StatelessWidget {
+  const ProductsWidget({Key? key}) : super(key: key);
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(()=>ListView.builder(
+
+        padding: const EdgeInsets.all(10),
+
+        itemCount: productController.products.length,
+        itemBuilder: (BuildContext context, int index) {
+          return SingleProductWidget(
+              product: productController.products.single);
+        }
+    )
+        );
+  }
+
+}
+*/
+
