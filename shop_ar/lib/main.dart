@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'screens/home/homeScreen.dart';
 import 'Firebase/firebase_options.dart';
-
+import 'home_list.dart';
 import 'Firebase/productService.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shop_ar/screens/loginSignup/login_page.dart';
@@ -20,7 +20,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  Get.put(ProductController());
+
   runApp(const ShopAR());
 }
 
@@ -29,8 +29,8 @@ class ShopAR extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      home: HomeScreen(),
+    return MaterialApp(
+      home: const HomeScreen(),
     );
 
   }
