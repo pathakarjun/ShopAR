@@ -1,20 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'screens/home/homeScreen.dart';
 import 'Firebase/firebase_options.dart';
-import 'home_list.dart';
-import 'Firebase/productService.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:shop_ar/screens/loginSignup/login_page.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'screens/loginSignup/loading_main.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-/*void main() =>
-  runApp(ShopAR());
-*/
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -30,7 +21,7 @@ class ShopAR extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const HomeScreen(),
+      home: HomeScreen(),
     );
 
   }
@@ -38,12 +29,12 @@ class ShopAR extends StatelessWidget {
 
 
 
-
-
-
-
-
-
+///References
+/// https://www.raywenderlich.com/26435435-firestore-tutorial-for-flutter-getting-started
+///
+///
+///
+///
 
 
 
