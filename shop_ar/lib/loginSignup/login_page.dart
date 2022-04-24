@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shop_ar/loginSignup/forgot_password.dart';
 import 'package:shop_ar/loginSignup/signup_page.dart';
+import 'package:shop_ar/home/home.dart';
+import 'package:shop_ar/product/product_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -24,7 +26,7 @@ class _LoginPage extends State<LoginPage> {
 
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => ForgotPassPage()), // Replace ForgotPassPage() with Home Page Screen
+          MaterialPageRoute(builder: (context) => Home()), // Replace ForgotPassPage() with home Page Screen
               (r) => false
       );
     } on FirebaseAuthException catch (e) {

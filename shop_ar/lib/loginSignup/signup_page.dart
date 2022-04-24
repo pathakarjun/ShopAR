@@ -78,7 +78,7 @@ class _SignupPage extends State<SignupPage> {
 
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()), // Replace ForgotPassPage() with Home Page Screen
+            MaterialPageRoute(builder: (context) => LoginPage()), // Replace ForgotPassPage() with home Page Screen
                 (r) => false
         );
       } on FirebaseAuthException catch (e) {

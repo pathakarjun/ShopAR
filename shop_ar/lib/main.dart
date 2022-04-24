@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shop_ar/loginSignup//login_page.dart';
-import 'firebase_options.dart';
+import 'package:shop_ar/product/product_page.dart';
+import 'package:shop_ar/home/home.dart';
+import 'firebase/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -79,7 +81,7 @@ class MyApp extends StatelessWidget {
           body: Container(
             alignment: Alignment.center,
             child: Container(
-              child: LoginPage(), //**************** CHANGE TO HOME SCREEN *******************
+              child: Home(), //**************** CHANGE TO HOME SCREEN *******************
             ), // New code
           ),
         ),
