@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:shop_ar/models/ProductModel.dart';
 
+///
+///Add on pressed in this file to switch to product page
+///
+///
+///
+
 
 
 class SingleProductWidget extends StatelessWidget {
   final  ProductModel product;
 
-  SingleProductWidget({Key? key, required this.product /*, required this.boldStyle*/})
+  SingleProductWidget({Key? key, required this.product })
       : super(key: key);
-  //const SingleProductWidget({ required this.product} ) ;
+
   @override
   Widget build(BuildContext context) {
     return Container(

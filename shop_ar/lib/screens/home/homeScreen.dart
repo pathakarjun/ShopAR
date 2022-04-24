@@ -58,10 +58,13 @@ class _HomeScreenState extends State<HomeScreen>{
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+            ///add onpressed
+
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.account_box),
               label: 'Profile'
+              ///add on pressed!
           ),
         ],
         backgroundColor: Color(0xFF353535),
