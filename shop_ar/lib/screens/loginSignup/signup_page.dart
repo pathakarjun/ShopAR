@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shop_ar/screens/loginSignup/login_page.dart';
-import 'package:shop_ar/screens/loginSignup/new_user.dart';
-import 'package:shop_ar/screens/loginSignup/loading_main.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -13,39 +13,100 @@ class SignupPage extends StatefulWidget {
   _SignupPage createState() => _SignupPage();
 }
 
-class _SignupPage extends State<SignupPage> {
-  final TextEditingController firstName = TextEditingController();
-  final TextEditingController lastName = TextEditingController();
+List<GlobalKey<FormState>> formKeys = [
+  GlobalKey<FormState>(),
+  GlobalKey<FormState>(),
+  GlobalKey<FormState>(),
+  GlobalKey<FormState>()
+];
 
-  final NewUser user = NewUser();
+class _SignupPage extends State<SignupPage> {
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _firstName = TextEditingController();
+  final TextEditingController _lastName = TextEditingController();
+  final TextEditingController _street = TextEditingController();
+  final TextEditingController _city = TextEditingController();
+  final TextEditingController _state = TextEditingController();
+  final TextEditingController _zipCode = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
 
-  void checkInput() {
-    if (firstName.text != "" && lastName.text != "") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SignupPage()),
-      );
+  Future<void> checkInput() async {
+    if (_firstName.text != "" &&
+        _lastName.text != "" &&
+        _street.text != "" &&
+        _city.text != "" &&
+        _state.text != "" &&
+        _zipCode.text != "" &&
+        _phone.text != "") {
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: _email.text,
+            password: _password.text
+        );
+
+        try {
+          final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+              email: _email.text,
+              password: _password.text
+          );
+          print(credential.user!.uid);
+          FirebaseFirestore.instance.collection('Users').doc(credential.user!.uid).set({
+            'first name': _firstName.text,
+            'last name': _lastName.text,
+            'street': _street.text,
+            'city': _city.text,
+            'state': _state.text,
+            'zip code': _zipCode.text,
+            'phone': _phone.text
+          })
+              .then((value) => FirebaseAuth.instance.signOut())
+              .catchError((error) => print("Failed to add user: $error"));
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'user-not-found') {
+            print('No user found for that email.');
+          } else if (e.code == 'wrong-password') {
+            print('Wrong password provided for that user.');
+          }
+        }
+
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()), // Replace ForgotPassPage() with home Page Screen
+                (r) => false
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+        }
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
-  int _index = 0;
+  Future<void> addUser() {
+    // Call the user's CollectionReference to add a new user
+    return users.add({
+      'first name': _firstName, // John Doe
+      'last name': _lastName, // Stokes and Sons
+      'street': _street,
+      'city': _city, // John Doe
+      'state': _state,
+      'zip code': _zipCode,
+      'phone': _phone
+        // 42
+    })
+        .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
 
-  static const _steps = [
-    Step(
-      title: Text('Personal'),
-      content: _PersonalForm(),
-    ),
-    Step(
-      title: Text('Address'),
-      content: _AddressForm(),
-    ),
-    Step(
-      title: Text('Phone Number'),
-      content: _PhoneForm(),
-    ),
-  ];
+  int _index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -72,31 +133,146 @@ class _SignupPage extends State<SignupPage> {
                   }
                 },
                 onStepContinue: () {
-                  if (_index <= 1) {
+                  if (_index <= 2) {
                     setState(() {
                       _index += 1;
                     });
-                  } else if (_index > 1) {}
+                  } else if (_index > 2) {
+                    checkInput();
+                  }
                 },
                 onStepTapped: (int index) {
                   setState(() {
                     _index = index;
                   });
                 },
-                steps: _steps,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
-                ),
-                onPressed: () {
-                  print(FirebaseAuth.instance.currentUser);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignupPage()),
+                controlsBuilder:
+                    (BuildContext context, ControlsDetails details) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //spacing: 25,
+                    children: <Widget>[
+                      ElevatedButton(
+                        onPressed: details.onStepContinue,
+                        child: Text(_index == 3 ? "SUBMIT" : "NEXT"),
+                      ),
+                      SizedBox(width: 25),
+                      TextButton(
+                        onPressed: details.onStepCancel,
+                        child: Text(_index == 0 ? " " : 'BACK'),
+                      ),
+                    ],
                   );
                 },
-                child: Text("Finish"),
+                steps: <Step>[
+                  Step(
+                      title: const Text('Email and Password'),
+                      content: Column(
+                        children: [
+                          TextFormField(
+                            textInputAction: TextInputAction.next,
+                            controller: _email,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: const InputDecoration(
+                              labelText: 'Email',
+                            ),
+                          ),
+                          TextFormField(
+                            textInputAction: TextInputAction.next,
+                            controller: _password,
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                              labelText: 'Password',
+                            ),
+                          ),
+                        ],
+                      )),
+                  Step(
+                    title: const Text('Personal'),
+                    content: Column(
+                      children: [
+                        TextFormField(
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.name,
+                          controller: _firstName,
+                          decoration: const InputDecoration(
+                            labelText: 'First Name',
+                          ),
+                        ),
+                        TextFormField(
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.name,
+                          controller: _lastName,
+                          decoration: const InputDecoration(
+                            labelText: 'Last Name',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Step(
+                    title: const Text('Address'),
+                    content: Column(
+                      children: [
+                        TextFormField(
+                          textInputAction: TextInputAction.next,
+                          controller: _street,
+                          decoration: const InputDecoration(
+                            labelText: 'Street',
+                          ),
+                        ),
+                        TextFormField(
+                          textInputAction: TextInputAction.next,
+                          controller: _city,
+                          decoration: const InputDecoration(
+                            labelText: 'City',
+                          ),
+                        ),
+                        TextFormField(
+                          textInputAction: TextInputAction.next,
+                          controller: _state,
+                          decoration: const InputDecoration(
+                            labelText: 'State (ST)',
+                          ),
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(2),
+                            UpperCaseTextFormatter(),
+                          ],
+                        ),
+                        TextFormField(
+                          textInputAction: TextInputAction.next,
+                          controller: _zipCode,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            labelText: 'Zip Code',
+                          ),
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(5),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Step(
+                    title: const Text('Phone Number'),
+                    content: Column(
+                      children: [
+                        TextFormField(
+                          textInputAction: TextInputAction.next,
+                          controller: _phone,
+                          keyboardType: TextInputType.phone,
+                          decoration: const InputDecoration(
+                            labelText: 'Phone Number',
+                          ),
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(10),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -106,84 +282,12 @@ class _SignupPage extends State<SignupPage> {
   }
 }
 
-class _PersonalForm extends StatelessWidget {
-  const _PersonalForm({Key? key}) : super(key: key);
-
+class UpperCaseTextFormatter extends TextInputFormatter {
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextFormField(
-          keyboardType: TextInputType.name,
-          decoration: const InputDecoration(
-            labelText: 'First Name',
-          ),
-        ),
-        TextFormField(
-          keyboardType: TextInputType.name,
-          decoration: const InputDecoration(
-            labelText: 'Last Name',
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _AddressForm extends StatelessWidget {
-  const _AddressForm({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextFormField(
-          decoration: const InputDecoration(
-            labelText: 'Street',
-          ),
-        ),
-        TextFormField(
-          decoration: const InputDecoration(
-            labelText: 'City',
-          ),
-          onSaved: (String? value) {
-            // This optional block of code can be used to run
-            // code when the user saves the form.
-          },
-          validator: (String? value) {
-            return (value!.contains('A')) ? "WRONG BITCH" : null;
-          },
-        ),
-        TextFormField(
-          decoration: const InputDecoration(
-            labelText: 'State',
-          ),
-        ),
-        TextFormField(
-          keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            labelText: 'Zip Code',
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _PhoneForm extends StatelessWidget {
-  const _PhoneForm({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextFormField(
-          keyboardType: TextInputType.phone,
-          decoration: const InputDecoration(
-            labelText: 'Phone Number',
-          ),
-        ),
-      ],
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: newValue.text.toUpperCase(),
+      selection: newValue.selection,
     );
   }
 }

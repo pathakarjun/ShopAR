@@ -1,34 +1,37 @@
-// ignore_for_file: file_names
-
+// **** importing all of our files and data ****
 import 'package:flutter/material.dart';
 import 'package:expandable_text/expandable_text.dart';
-import 'package:shop_ar/product/ar_model.dart';
+import 'package:shop_ar/screens/product/ar_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 class ProductPage extends StatelessWidget {
+// ***** parameters for to create a product page ****
   final String name;
   final int price;
-  final String description;
+  final String? description;
   final String image;
   final String id;
 
+// **** what constructs the page ****
   const ProductPage(
       {required this.name,
-      required this.price,
-      required this.description,
-      required this.image,
-      required this.id});
+        required this.price,
+        required this.description,
+        required this.image,
+        required this.id});
 
   @override
   Widget build(BuildContext context) {
+//creates an instance of the collection of users
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
-    FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseAuth auth = FirebaseAuth.instance; //auth for the user
 
-    Future<void> addToCart() {
-      // Call the user's CollectionReference to add a new user
+    Future<void> addToCart() { // **** adds the current items id to the current users cart. ****
+      // ***** Call the user's CollectionReference to add a new user *****
       return users.doc(auth.currentUser!.uid).collection('cart')
           .add({
         'id': id
@@ -36,49 +39,49 @@ class ProductPage extends StatelessWidget {
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));
     }
-
+// ****** design for the app. Covers the color scheme to the placements of buttons.*****
     return Scaffold(
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
           child: Container(
               child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Row(
-              children: [
-                RichText(
-                  text: TextSpan(
-                    text: "\$",
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w300),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: '${price.toString()}.00',
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                ),
-                const Spacer(),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      // fromHeight use double.infinity as width and 40 is the height
+                padding: const EdgeInsets.all(15),
+                child: Row(
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        text: "\$",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w300),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: '${price.toString()}.00',
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w500)),
+                        ],
                       ),
-                  onPressed: () {
-                    addToCart();
-                    print("ADD TO CART");
-                  },
-                  child: const Text(
-                    '+ Add to Cart',
-                    style: TextStyle(fontSize: 10),
-                  ),
+                    ),
+                    const Spacer(),
+                    ElevatedButton( // ***** the creation of the button for add to cart. ******
+                      style: ElevatedButton.styleFrom(
+                        // fromHeight use double.infinity as width and 40 is the height
+                      ),
+                      onPressed: () {
+                        addToCart();
+                        print("ADD TO CART");
+                      },
+                      child: const Text(
+                        '+ Add to Cart',
+                        style: TextStyle(fontSize: 10),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          )),
+              )),
         ),
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
@@ -119,10 +122,10 @@ class ProductPage extends StatelessWidget {
                               fontSize: 25, fontWeight: FontWeight.bold),
                         ),
                         const Spacer(),
-                        ElevatedButton(
+                        ElevatedButton(// ***** this is the button to push the page for the AR model *****
                             style: ElevatedButton.styleFrom(),
                             onPressed: () {
-                              Navigator.push(
+                              Navigator.push( // ***** this function pushes the new ARs page. ******
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => ARModel()),
@@ -156,7 +159,7 @@ class ProductPage extends StatelessWidget {
                       ],
                     ),
                     ExpandableText(
-                      description,
+                      description!,
                       expandText: 'Read more',
                       style: const TextStyle(fontSize: 17),
                       collapseText: 'Read less',

@@ -5,6 +5,8 @@ import 'package:shop_ar/models/ProductModel.dart';
 import 'package:shop_ar/models/oneProduct.dart';
 import 'package:shop_ar/repository/data_repository.dart';
 
+import '../product/shopping_cart.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,19 +28,22 @@ class _HomeScreenState extends State<HomeScreen>{
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
 
-          title: Text('ShopAR',
-            style: TextStyle(color: Color(0xFF1E1E1E),
+          title: const Text('ShopAR',
+            style: TextStyle(color: Color(0xFFFFFFFF),
                 fontWeight: FontWeight.bold
             ),),
           centerTitle: true,
-          backgroundColor: Color(0xFFE84855),
+          //backgroundColor: Color(0xFFE84855),
           actions: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
               child: IconButton(
                   icon: Icon(Icons.shopping_cart),
                   onPressed: (){
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Cart()),
+                    );
                   }
               ),
             )
@@ -67,7 +72,6 @@ class _HomeScreenState extends State<HomeScreen>{
               ///add on pressed!
           ),
         ],
-        backgroundColor: Color(0xFF353535),
         selectedItemColor: Color(0xFFF08B93),
         unselectedItemColor: Colors.grey,
       ),
@@ -80,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen>{
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
       padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
+      childAspectRatio: 0.8,
 
 
       children: snapshot.map((data) => _buildListItem(context ,data)).toList(),

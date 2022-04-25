@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shop_ar/screens/loginSignup/forgot_password.dart';
-import 'package:shop_ar/screens/loginSignup/loading_main.dart';
 import 'package:shop_ar/screens/loginSignup/signup_page.dart';
+import 'package:shop_ar/screens/home/homeScreen.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -12,8 +12,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-  TextEditingController email = new TextEditingController();
-  TextEditingController password = new TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -21,7 +21,13 @@ class _LoginPage extends State<LoginPage> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-          email: email.text, password: password.text);
+              email: email.text, password: password.text);
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()), // Replace ForgotPassPage() with home Page Screen
+              (r) => false
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -36,68 +42,68 @@ class _LoginPage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Container(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                children: [
-                  Image(image: AssetImage("assets/images/Logo.png")),
-                  TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Email',
-                    ),
-                    controller: email,
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              children: [
+                const Image(image: AssetImage("assets/images/Logo.png")),
+                TextField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Email',
                   ),
-                  SizedBox(height: 15),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                    ),
-                    controller: password,
+                  controller: email,
+                ),
+                const SizedBox(height: 15),
+                TextField(
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Password',
                   ),
-                  SizedBox(height: 60),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
-                    ),
-                    onPressed: () {
-                      login();
-                    },
-                    child: const Text(
-                      'Log In',
-                    ),
+                  controller: password,
+                ),
+                const SizedBox(height: 60),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
                   ),
-                  SizedBox(height: 15),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
-                    ),
-                    onPressed: () {
-                      print(FirebaseAuth.instance.currentUser);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignupPage()),
-                      );
-                    },
-                    child: Text("Sign Up"),
+                  onPressed: () {
+                    login();
+                  },
+                  child: const Text(
+                    'Log In',
                   ),
-                  SizedBox(height: 15),
-                  TextButton(onPressed: () {
+                ),
+                const SizedBox(height: 15),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
+                  ),
+                  onPressed: () {
+                    print(FirebaseAuth.instance.currentUser);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ForgotPassPage()),
+                      MaterialPageRoute(builder: (context) => SignupPage()),
                     );
-                  }, child: Text("Forgot Password?")),
-                ],
-              ),
+                  },
+                  child: const Text("Sign Up"),
+                ),
+                const SizedBox(height: 15),
+                TextButton(onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ForgotPassPage()),
+                  );
+                }, child: Text("Forgot Password?")),
+              ],
             ),
           ),
-        )
+        ),
+      )
     );
   }
 }

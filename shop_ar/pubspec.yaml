@@ -40,6 +40,7 @@ dependencies:
   expandable_text: ^2.3.0
   arkit_plugin: ^1.0.5
   firebase_storage: ^10.2.13
+  get: ^4.6.1
 
 dev_dependencies:
   flutter_test:

@@ -8,7 +8,7 @@ class ProductModel{
   String name;
   //String seller;
   String? description;
-  double price;
+  int price;
 
   String? reference;
 
@@ -34,7 +34,7 @@ ProductModel _productFromJson(Map<String, dynamic> json) {
     name: json['Name'] as String,
     description: json['Description'] as String,
     //seller: json['Seller'] as String,
-    price: json['Price'] as double,
+    price: json['Price'] as int,
   );
 }
 

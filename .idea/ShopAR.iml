@@ -72,6 +72,12 @@
       <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/arkit_plugin/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/arkit_plugin/example/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/arkit_plugin/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/firebase_storage/build" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/firebase_storage/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/firebase_storage/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/firebase_storage/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/firebase_storage/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/firebase_storage/example/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
