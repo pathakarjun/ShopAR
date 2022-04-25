@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shop_ar/screens/loginSignup/forgot_password.dart';
 import 'package:shop_ar/screens/loginSignup/signup_page.dart';
-import 'package:shop_ar/screens/home/homeScreen.dart';
+import 'package:shop_ar/homeScreen.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -87,7 +87,7 @@ class _LoginPage extends State<LoginPage> {
                     print(FirebaseAuth.instance.currentUser);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignupPage()),
+                      MaterialPageRoute(builder: (context) => const SignupPage()),
                     );
                   },
                   child: const Text("Sign Up"),
@@ -98,7 +98,7 @@ class _LoginPage extends State<LoginPage> {
                     context,
                     MaterialPageRoute(builder: (context) => ForgotPassPage()),
                   );
-                }, child: Text("Forgot Password?")),
+                }, child: const Text("Forgot Password?")),
               ],
             ),
           ),

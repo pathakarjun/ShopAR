@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shop_ar/buttomNavigationPages/home.dart';
+import 'package:shop_ar/screens/home/homeScreen.dart';
 import 'package:shop_ar/buttomNavigationPages/profilePage/profile.dart';
+import 'package:shop_ar/screens/product/shopping_cart.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -21,11 +22,37 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+
+          title: const Text('ShopAR',
+            style: TextStyle(color: Color(0xFFFFFFFF),
+                fontWeight: FontWeight.bold
+            ),),
+          centerTitle: true,
+          //backgroundColor: Color(0xFFE84855),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+              child: IconButton(
+                  icon: Icon(Icons.shopping_cart),
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Cart()),
+                    );
+                  }
+              ),
+            )
+          ],
+        ),
+      ),
       body: PageView(
         controller: pageController,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: [
-          Home(),
+          const Home(),
           Profile(),
         ],
       ),
@@ -35,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Color(0xffF08B93),
+          selectedItemColor: const Color(0xffF08B93),
           onTap: onTapped),
     );
   }

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_ar/appColors.dart';
 import 'package:shop_ar/buttomNavigationPages/profilePage/profileMenu/myAccMenu.dart';
-import 'package:shop_ar/loginSignup/login_page.dart';
+import 'package:shop_ar/screens/loginSignup/login_page.dart';
 
 import 'components/profileMenu.dart';
 import 'components/profilePic.dart';
@@ -57,9 +57,13 @@ class _ProfileState extends State<Profile> {
                   const Icon(Icons.logout_outlined, color: AppColors.deep_red),
               press: () async {
                 await FirebaseAuth.instance.signOut();
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => LoginPage()));
-              },
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    // Replace ForgotPassPage() with home Page Screen
+                        (r) => false
+                );
+              }
             ),
           ],
         ),

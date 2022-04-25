@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shop_ar/loginSignup/login_page.dart';
+import 'package:shop_ar/screens/loginSignup/login_page.dart';
 
 class ProfilePic extends StatelessWidget {
   const ProfilePic({

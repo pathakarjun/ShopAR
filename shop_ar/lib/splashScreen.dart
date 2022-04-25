@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_ar/appColors.dart';
 import 'package:shop_ar/homeScreen.dart';
-import 'package:shop_ar/loginSignup/login_page.dart';
+import 'package:shop_ar/screens/loginSignup/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key? key}) : super(key: key);

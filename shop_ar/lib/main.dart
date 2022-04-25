@@ -4,7 +4,7 @@ import 'package:shop_ar/screens/loginSignup//login_page.dart';
 import 'firebase/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_ar/screens/home/homeScreen.dart';
+import 'package:shop_ar/homeScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -8,14 +8,14 @@ import 'package:shop_ar/repository/data_repository.dart';
 import '../product/shopping_cart.dart';
 
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _Home createState() => _Home();
 }
 
-class _HomeScreenState extends State<HomeScreen>{
+class _Home extends State<Home>{
   // This widget is the root of your application.
 
   final DataRepository repository = DataRepository();
@@ -23,33 +23,6 @@ class _HomeScreenState extends State<HomeScreen>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF353535),
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
-        child: AppBar(
-
-          title: const Text('ShopAR',
-            style: TextStyle(color: Color(0xFFFFFFFF),
-                fontWeight: FontWeight.bold
-            ),),
-          centerTitle: true,
-          //backgroundColor: Color(0xFFE84855),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
-              child: IconButton(
-                  icon: Icon(Icons.shopping_cart),
-                  onPressed: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Cart()),
-                    );
-                  }
-              ),
-            )
-          ],
-        ),
-      ),
       body: StreamBuilder<QuerySnapshot>(
           stream: repository.getStream(),
           builder: (context, snapshot) {
@@ -57,24 +30,6 @@ class _HomeScreenState extends State<HomeScreen>{
 
             return _buildList(context, snapshot.data?.docs ?? []);
           }),
-
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            ///add onpressed
-
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_box),
-              label: 'Profile'
-              ///add on pressed!
-          ),
-        ],
-        selectedItemColor: Color(0xFFF08B93),
-        unselectedItemColor: Colors.grey,
-      ),
     );
   }
 
