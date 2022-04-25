@@ -17,20 +17,24 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3), () => authpersistence());
+    Timer(const Duration(seconds: 3), () => authpersistence());
     super.initState();
   }
 
   authpersistence() => {
         if (FirebaseAuth.instance.currentUser != null)
           {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) => HomeScreen()))
+            Navigator.pushAndRemoveUntil(
+                context, MaterialPageRoute(builder: (_) => HomeScreen()),
+                (r) => false
+            ),
           }
         else
           {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) => LoginPage()))
+            Navigator.pushAndRemoveUntil(
+                context, MaterialPageRoute(builder: (_) => LoginPage()),
+                (r) => false
+            ),
           }
       };
 
@@ -42,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+            children: const [
               Image(image: AssetImage("assets/images/Logo.png")),
               CircularProgressIndicator(backgroundColor: Colors.white)
             ]),

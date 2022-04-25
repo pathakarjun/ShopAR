@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shop_ar/screens/loginSignup//login_page.dart';
 import 'firebase/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shop_ar/homeScreen.dart';
+import 'package:shop_ar/splashScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,28 +72,15 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    if (FirebaseAuth.instance.currentUser != null) {
-      // ****LOGGED IN****
-      return MaterialApp(
+    return ScreenUtilInit(
+      designSize: Size(375, 812),
+      builder: (BuildContext c) => MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: themeColors,
-        home: HomeScreen()
-      );
-    } else {
-      // ****NOT LOGGED IN****
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: themeColors,
-        home: Scaffold(
-          body: Container(
-            alignment: Alignment.center,
-            child: Container(
-              child: LoginPage(),
-            ), // New code
-          ),
-        ),
-      );
-    }
+        home: SplashScreen(),
+      ),
+    );
+
   }
 }
 
