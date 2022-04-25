@@ -1,4 +1,3 @@
-
 import 'dart:math' as math;
 import 'package:arkit_plugin/arkit_plugin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,11 +11,16 @@ class Cart extends StatefulWidget {
 }
 
 class _Cart extends State<Cart> {
-
-  CollectionReference _collectionRef = FirebaseFirestore.instance.collection('Users').doc(FirebaseAuth.instance.currentUser!.uid).collection("cart");
+  CollectionReference _collectionRef = FirebaseFirestore.instance
+      .collection('Users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .collection("cart");
 
   Future<List> getData() async {
-    CollectionReference _collectionRef = FirebaseFirestore.instance.collection('Users').doc(FirebaseAuth.instance.currentUser!.uid).collection("cart");
+    CollectionReference _collectionRef = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("cart");
     // Get docs from collection reference
     QuerySnapshot querySnapshot = await _collectionRef.get();
 
@@ -28,14 +32,11 @@ class _Cart extends State<Cart> {
   }
 
   Widget build(BuildContext context) {
-
     final list = getData();
 
     return Scaffold(
+        appBar: AppBar(title: const Text('Cart')),
         resizeToAvoidBottomInset: true,
-        body: SingleChildScrollView(
-            child: Container()
-        )
-    );
+        body: SingleChildScrollView(child: Container()));
   }
 }

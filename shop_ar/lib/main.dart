@@ -61,8 +61,7 @@ class MyApp extends StatelessWidget {
       primaryColor: const Color(0xFFE84855),
       scaffoldBackgroundColor: const Color(0xFF353535),
       appBarTheme: const AppBarTheme(
-          color: Color(0xFF1e1e1e),
-          foregroundColor: Color(0xFFFFFFFF)),
+          color: Color(0xFF1e1e1e), foregroundColor: Color(0xFFFFFFFF)),
 
       textTheme: GoogleFonts.montserratTextTheme(
         Theme.of(context).textTheme,
@@ -80,7 +79,6 @@ class MyApp extends StatelessWidget {
         home: SplashScreen(),
       ),
     );
-
   }
 }
 
