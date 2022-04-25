@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_ar/loginSignup/login_page.dart';
 import 'package:shop_ar/loginSignup/new_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -46,46 +47,50 @@ class _SignupPage extends State<SignupPage> {
         _zipCode.text != "" &&
         _phone.text != "") {
       try {
-        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: _email.text,
-            password: _password.text
-        );
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+                email: _email.text, password: _password.text);
 
         try {
-          final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-              email: _email.text,
-              password: _password.text
-          );
+          final credential = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(
+                  email: _email.text, password: _password.text);
           print(credential.user!.uid);
-          FirebaseFirestore.instance.collection('Users').doc(credential.user!.uid).set({
-            'first name': _firstName.text,
-            'last name': _lastName.text,
-            'street': _street.text,
-            'city': _city.text,
-            'state': _state.text,
-            'zip code': _zipCode.text,
-            'phone': _phone.text
-          })
+          FirebaseFirestore.instance
+              .collection('Users')
+              .doc(credential.user!.uid)
+              .set({
+                'first name': _firstName.text,
+                'last name': _lastName.text,
+                'street': _street.text,
+                'city': _city.text,
+                'state': _state.text,
+                'zip code': _zipCode.text,
+                'phone': _phone.text
+              })
               .then((value) => FirebaseAuth.instance.signOut())
               .catchError((error) => print("Failed to add user: $error"));
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
-            print('No user found for that email.');
+            Fluttertoast.showToast(msg: "No user found for that email.");
           } else if (e.code == 'wrong-password') {
-            print('Wrong password provided for that user.');
+            Fluttertoast.showToast(
+                msg: "Wrong password provided for that user.");
           }
         }
 
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()), // Replace ForgotPassPage() with Home Page Screen
-                (r) => false
-        );
+            MaterialPageRoute(
+                builder: (context) =>
+                    LoginPage()), // Replace ForgotPassPage() with Home Page Screen
+            (r) => false);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
-          print('The password provided is too weak.');
+          Fluttertoast.showToast(msg: "The password provided is too weak.");
         } else if (e.code == 'email-already-in-use') {
-          print('The account already exists for that email.');
+          Fluttertoast.showToast(
+              msg: "The account already exists for that email.");
         }
       } catch (e) {
         print(e);
@@ -95,18 +100,20 @@ class _SignupPage extends State<SignupPage> {
 
   Future<void> addUser() {
     // Call the user's CollectionReference to add a new user
-    return users.add({
-      'first name': _firstName, // John Doe
-      'last name': _lastName, // Stokes and Sons
-      'street': _street,
-      'city': _city, // John Doe
-      'state': _state,
-      'zip code': _zipCode,
-      'phone': _phone
-        // 42
-    })
+    return users
+        .add({
+          'first name': _firstName, // John Doe
+          'last name': _lastName, // Stokes and Sons
+          'street': _street,
+          'city': _city, // John Doe
+          'state': _state,
+          'zip code': _zipCode,
+          'phone': _phone
+          // 42
+        })
         .then((value) => print("User Added"))
-        .catchError((error) => print("Failed to add user: $error"));
+        .catchError((error) =>
+            Fluttertoast.showToast(msg: "Failed to add user: $error"));
   }
 
   int _index = 0;
@@ -287,7 +294,8 @@ class _SignupPage extends State<SignupPage> {
 
 class UpperCaseTextFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     return TextEditingValue(
       text: newValue.text.toUpperCase(),
       selection: newValue.selection,

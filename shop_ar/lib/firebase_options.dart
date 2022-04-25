@@ -60,7 +60,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '317350571036',
     projectId: 'shopar-3f662',
     storageBucket: 'shopar-3f662.appspot.com',
-    iosClientId: '317350571036-86nnfq8r7euk1426n1uq3h3rvhr9d7ud.apps.googleusercontent.com',
+    iosClientId:
+        '317350571036-86nnfq8r7euk1426n1uq3h3rvhr9d7ud.apps.googleusercontent.com',
     iosBundleId: 'com.shopar.app',
   );
 }

@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shop_ar/homeScreen.dart';
 import 'package:shop_ar/loginSignup/forgot_password.dart';
 import 'package:shop_ar/loginSignup/signup_page.dart';
 
@@ -21,19 +23,21 @@ class _LoginPage extends State<LoginPage> {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: email.text, password: password.text);
-
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => ForgotPassPage()), // Replace ForgotPassPage() with Home Page Screen
-              (r) => false
-      );
+      var authCrenditials = userCredential.user;
+      print(authCrenditials!.uid);
+      if (authCrenditials.uid.isNotEmpty) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => HomeScreen()));
+      } else {
+        Fluttertoast.showToast(msg: "Something is wrong");
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        Fluttertoast.showToast(msg: "No user found for that email.");
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        Fluttertoast.showToast(msg: "Wrong password provided for that user.");
       } else {
-        print(e.code);
+        Fluttertoast.showToast(msg: e.code);
       }
     }
   }
@@ -41,68 +45,72 @@ class _LoginPage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Container(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              children: [
-                const Image(image: AssetImage("assets/images/Logo.png")),
-                TextField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Email',
+        resizeToAvoidBottomInset: true,
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Container(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                children: [
+                  const Image(image: AssetImage("assets/images/Logo.png")),
+                  TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Email',
+                    ),
+                    controller: email,
                   ),
-                  controller: email,
-                ),
-                const SizedBox(height: 15),
-                TextField(
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
+                  const SizedBox(height: 15),
+                  TextField(
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Password',
+                    ),
+                    controller: password,
                   ),
-                  controller: password,
-                ),
-                const SizedBox(height: 60),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
+                  const SizedBox(height: 60),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(
+                          40), // fromHeight use double.infinity as width and 40 is the height
+                    ),
+                    onPressed: () {
+                      login();
+                    },
+                    child: const Text(
+                      'Log In',
+                    ),
                   ),
-                  onPressed: () {
-                    login();
-                  },
-                  child: const Text(
-                    'Log In',
+                  const SizedBox(height: 15),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(
+                          40), // fromHeight use double.infinity as width and 40 is the height
+                    ),
+                    onPressed: () {
+                      print(FirebaseAuth.instance.currentUser);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignupPage()),
+                      );
+                    },
+                    child: const Text("Sign Up"),
                   ),
-                ),
-                const SizedBox(height: 15),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(40), // fromHeight use double.infinity as width and 40 is the height
-                  ),
-                  onPressed: () {
-                    print(FirebaseAuth.instance.currentUser);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignupPage()),
-                    );
-                  },
-                  child: const Text("Sign Up"),
-                ),
-                const SizedBox(height: 15),
-                TextButton(onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ForgotPassPage()),
-                  );
-                }, child: Text("Forgot Password?")),
-              ],
+                  const SizedBox(height: 15),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ForgotPassPage()),
+                        );
+                      },
+                      child: Text("Forgot Password?")),
+                ],
+              ),
             ),
           ),
-        ),
-      )
-    );
+        ));
   }
 }
