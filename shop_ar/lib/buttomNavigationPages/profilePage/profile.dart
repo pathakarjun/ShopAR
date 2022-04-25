@@ -67,8 +67,26 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget buildProfileName() => const Text(
-        ("James"),
-        style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-      );
+  Widget buildProfileName() {
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(FirebaseAuth.instance.currentUser!.uid).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Text(
+            "${data['first name']} ${data['last name']}",
+            style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          );
+        }
+
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
 }
