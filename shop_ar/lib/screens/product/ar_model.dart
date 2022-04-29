@@ -142,7 +142,7 @@ class _ARModel extends State<ARModel> {
           uri:
           "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/SheenChair/glTF-Binary/SheenChair.glb",
           position: Vector3(0.0, -1.0, -1.0),
-          scale: Vector3(50.2, 50.2, 100.2));
+          scale: Vector3(50.2, 50.2, 50.2));
       bool? didAddWebNode = await this.arObjectManager?.addNode(newNode);
       this.webObjectNode = (didAddWebNode!) ? newNode : null;
     }
