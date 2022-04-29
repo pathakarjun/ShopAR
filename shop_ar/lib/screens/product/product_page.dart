@@ -42,7 +42,7 @@ class ProductPage extends StatelessWidget {
 
 // ****** design for the app. Covers the color scheme to the placements of buttons.*****
     return Scaffold(
-        appBar: AppBar(title: const Text('Product')),
+        appBar: AppBar(title: Text(name)),
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
           child: Container(

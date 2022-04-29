@@ -84,6 +84,24 @@
       <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/fluttertoast/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/fluttertoast/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/fluttertoast/build" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/geolocator_apple/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/geolocator_apple/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/geolocator_apple/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/geolocator_apple/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/geolocator_apple/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/geolocator_apple/build" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/permission_handler/build" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/permission_handler/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/permission_handler/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/ar_flutter_plugin/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/ar_flutter_plugin/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/ar_flutter_plugin/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/permission_handler/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/permission_handler/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/permission_handler/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/ar_flutter_plugin/build" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/ar_flutter_plugin/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/shop_ar/ios/.symlinks/plugins/ar_flutter_plugin/.dart_tool" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
