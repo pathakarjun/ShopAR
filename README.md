@@ -16,4 +16,6 @@ The packages used in this project are :</br>
 - ar_flutter_plugin</br>
 - flutter_archive</br>
 </br>
-Once you have those, you can go into an IDE such as Android studio and, using a simulator or connected mobile device, run the program.
+Once you have those, you can go into an IDE such as Android studio and, using a simulator or connected mobile device, run the program.</br>
+</br>
+Option 2: Another way to run it is to download all the packages mentioned above, and the use the command "flutter run" when in the main directory or the project. If a device such as a mobile phone is connected, it will start the program on that device, otherwise it will start it using the main browser on the computer.
