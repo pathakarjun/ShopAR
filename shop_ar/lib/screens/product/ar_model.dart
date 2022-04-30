@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:ar_flutter_plugin/datatypes/hittest_result_types.dart';
@@ -54,11 +53,11 @@ class _ARModel extends State<ARModel> {
         ),
         body: Container(
             child: Stack(children: [
-              ARView(
-                onARViewCreated: onARViewCreated,
-                planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
-              ),
-            ])));
+          ARView(
+            onARViewCreated: onARViewCreated,
+            planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
+          ),
+        ])));
   }
 
   void onARViewCreated(
@@ -71,14 +70,14 @@ class _ARModel extends State<ARModel> {
     this.arAnchorManager = arAnchorManager;
 
     this.arSessionManager?.onInitialize(
-      showFeaturePoints: false,
-      showPlanes: false,
-      customPlaneTexturePath: "Images/triangle.png",
-      showWorldOrigin: false,
-      handleTaps: false,
-      handlePans: true,
-      handleRotation: true,
-    );
+          showFeaturePoints: false,
+          showPlanes: false,
+          customPlaneTexturePath: "Images/triangle.png",
+          showWorldOrigin: false,
+          handleTaps: false,
+          handlePans: true,
+          handleRotation: true,
+        );
     this.arObjectManager?.onInitialize();
 
     this.arSessionManager?.onPlaneOrPointTap = onPlaneOrPointTapped;
@@ -140,7 +139,7 @@ class _ARModel extends State<ARModel> {
       var newNode = ARNode(
           type: NodeType.webGLB,
           uri:
-          "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/SheenChair/glTF-Binary/SheenChair.glb",
+              "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/SheenChair/glTF-Binary/SheenChair.glb",
           position: Vector3(0.0, -1.0, -1.0),
           scale: Vector3(50.2, 50.2, 50.2));
       bool? didAddWebNode = await this.arObjectManager?.addNode(newNode);
@@ -156,10 +155,10 @@ class _ARModel extends State<ARModel> {
   Future<void> onPlaneOrPointTapped(
       List<ARHitTestResult> hitTestResults) async {
     var singleHitTestResult = hitTestResults.firstWhere(
-            (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
+        (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
     if (singleHitTestResult != null) {
       var newAnchor =
-      ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
+          ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
       bool? didAddAnchor = await this.arAnchorManager?.addAnchor(newAnchor);
       if (didAddAnchor != null) {
         this.anchors.add(newAnchor);
@@ -167,12 +166,13 @@ class _ARModel extends State<ARModel> {
         var newNode = ARNode(
             type: NodeType.webGLB,
             uri:
-            "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/SheenChair/glTF-Binary/SheenChair.glb",
+                "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/SheenChair/glTF-Binary/SheenChair.glb",
             scale: Vector3(50.2, 50.2, 50.2),
             position: Vector3(0.0, 0.0, 0.0),
             rotation: Vector4(1.0, 0.0, 0.0, 0.0));
-        bool? didAddNodeToAnchor =
-        await this.arObjectManager?.addNode(newNode, planeAnchor: newAnchor);
+        bool? didAddNodeToAnchor = await this
+            .arObjectManager
+            ?.addNode(newNode, planeAnchor: newAnchor);
         if (didAddNodeToAnchor != null) {
           this.nodes.add(newNode);
         } else {
@@ -206,7 +206,7 @@ class _ARModel extends State<ARModel> {
   onPanEnded(String nodeName, Matrix4 newTransform) {
     print("Ended panning node " + nodeName);
     final pannedNode =
-    this.nodes.firstWhere((element) => element.name == nodeName);
+        this.nodes.firstWhere((element) => element.name == nodeName);
 
     /*
     * Uncomment the following command if you want to keep the transformations of the Flutter representations of the nodes up to date
@@ -226,7 +226,7 @@ class _ARModel extends State<ARModel> {
   onRotationEnded(String nodeName, Matrix4 newTransform) {
     print("Ended rotating node " + nodeName);
     final rotatedNode =
-    this.nodes.firstWhere((element) => element.name == nodeName);
+        this.nodes.firstWhere((element) => element.name == nodeName);
 
     /*
     * Uncomment the following command if you want to keep the transformations of the Flutter representations of the nodes up to date

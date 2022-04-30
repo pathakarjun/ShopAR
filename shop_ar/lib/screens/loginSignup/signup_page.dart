@@ -43,26 +43,27 @@ class _SignupPage extends State<SignupPage> {
         _zipCode.text != "" &&
         _phone.text != "") {
       try {
-        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: _email.text,
-            password: _password.text
-        );
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+                email: _email.text, password: _password.text);
 
         try {
-          final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-              email: _email.text,
-              password: _password.text
-          );
+          final credential = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(
+                  email: _email.text, password: _password.text);
           print(credential.user!.uid);
-          FirebaseFirestore.instance.collection('Users').doc(credential.user!.uid).set({
-            'first name': _firstName.text,
-            'last name': _lastName.text,
-            'street': _street.text,
-            'city': _city.text,
-            'state': _state.text,
-            'zip code': _zipCode.text,
-            'phone': _phone.text
-          })
+          FirebaseFirestore.instance
+              .collection('Users')
+              .doc(credential.user!.uid)
+              .set({
+                'first name': _firstName.text,
+                'last name': _lastName.text,
+                'street': _street.text,
+                'city': _city.text,
+                'state': _state.text,
+                'zip code': _zipCode.text,
+                'phone': _phone.text
+              })
               .then((value) => FirebaseAuth.instance.signOut())
               .catchError((error) => print("Failed to add user: $error"));
         } on FirebaseAuthException catch (e) {
@@ -75,9 +76,10 @@ class _SignupPage extends State<SignupPage> {
 
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()), // Replace ForgotPassPage() with home Page Screen
-                (r) => false
-        );
+            MaterialPageRoute(
+                builder: (context) =>
+                    LoginPage()), // Replace ForgotPassPage() with home Page Screen
+            (r) => false);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           print('The password provided is too weak.');
@@ -92,16 +94,17 @@ class _SignupPage extends State<SignupPage> {
 
   Future<void> addUser() {
     // Call the user's CollectionReference to add a new user
-    return users.add({
-      'first name': _firstName, // John Doe
-      'last name': _lastName, // Stokes and Sons
-      'street': _street,
-      'city': _city, // John Doe
-      'state': _state,
-      'zip code': _zipCode,
-      'phone': _phone
-        // 42
-    })
+    return users
+        .add({
+          'first name': _firstName, // John Doe
+          'last name': _lastName, // Stokes and Sons
+          'street': _street,
+          'city': _city, // John Doe
+          'state': _state,
+          'zip code': _zipCode,
+          'phone': _phone
+          // 42
+        })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
@@ -284,7 +287,8 @@ class _SignupPage extends State<SignupPage> {
 
 class UpperCaseTextFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     return TextEditingValue(
       text: newValue.text.toUpperCase(),
       selection: newValue.selection,
